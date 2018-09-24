@@ -1,0 +1,12 @@
+main>p{
+  background-color: lightblue;
+  text.align: center;
+  padding: 30px;
+}
+
+main{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
+  grid-column-gap: 15px;
+  grid-row-gap: 3px;
+}

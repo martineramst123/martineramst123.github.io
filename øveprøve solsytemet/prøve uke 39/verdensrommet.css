@@ -1,0 +1,11 @@
+main>p{
+  background-color: black;
+  text.align: center;
+  padding: 30px;
+}
+main{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr
+  grid-column-gap: 15px;
+  grid-row-gap: 3px;
+}
