@@ -1,8 +1,10 @@
-main>p{
-  background-color: black;
-  text.align: center;
-  padding: 30px;
-}
+  <style>
+    main{
+      display: grid;
+      grid-template-columns: 200px 200px 200px;
+    }
+    </style>
+
 main{
   display: grid;
   grid-template-columns:1fr 1fr 1fr 1fr
