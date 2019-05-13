@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dyreklinikken</title>
+    <link rel="stylesheet" href="dyreklinikk.css">
+    <!-- Husk å koble til firebase -->
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAHKvTKjUtZ-cSR7cFQ1U41G-9pJaUE8tg",
+        authDomain: "uke10-prove.firebaseapp.com",
+        databaseURL: "https://uke10-prove.firebaseio.com",
+        projectId: "uke10-prove",
+        storageBucket: "",
+        messagingSenderId: "406914421433"
+      };
+      firebase.initializeApp(config);
+
+    </script>
+
+  </head>
+  <body>
+    <header>
+      <nav>
+        <button onclick="visKatter()">Oppgave 3a</button>
+        <button onclick="visTreEldst()">Oppgave 3b</button>
+        <button onclick="visBeige()">Oppgave 3c</button>
+        <button onclick="visMtilT()">Oppgave 3d</button>
+         <!-- Gjør ferdig knappene og koblingene her-->
+
+      </nav>
+    </header>
+    <main>
+
+
+
+    </main>
+
+    <script>
+      const main = document.querySelector("main");
+      const db = firebase.database();
+
+      const hunder = db.ref("Dyr/Hunder");
+      const katter = db.ref("Dyr/Katter");  //Fyll inn riktig referanse
+                                  //Lag en referanse for katter også!
+
+      function genererHTML(snapshot){
+        let dyr = snapshot.val();
+        let key = snapshot.key;
+
+        main.innerHTML +=`
+            <article class="Dyr">
+              <h1>${dyr.Navn}</h1>
+              <img src="${dyr.Bilde}" alt="">
+              <p>Farge: ${dyr.Farge1}, ${dyr.Type2}</p>
+              <p>Alder: ${dyr.Alder}</p>
+              <a href="dyredetaljer.html?id=${key}">Les mer</a>
+            </article>
+        `
+      }
+
+      function visAlle(){
+        main.innerHTML = "";
+        hunder.on("child_added",genererHTML);
+        katter.on("child_added",genererHTML);
+      }
+
+      visAlle();
+
+      function visKatter(){
+        main.innerHTML= ``
+        katter.orderByChild("Navn")
+        .on("child_added", genererHTML);
+      }
+
+      function visTreEldst(){
+        main.innerHTML= ``
+        hunder
+        .orderByChild("Alder")
+        .limitToLast(3)
+        .on("child_added", genererHTML);
+
+
+      }
+
+      function visBeige(){
+        main.innerHTML= ``
+        katter.orderByChild("Farge1").equalTo("Beige").on("child_added", genererHTML);
+        katter.orderByChild("Farge2").equalTo("Beige").on("child_added", genererHTML);
+        hunder.orderByChild("Farge1").equalTo("Beige").on("child_added", genererHTML);
+        hunder.orderByChild("Farge2").equalTo("Beige").on("child_added", genererHTML);
+
+      }
+
+
+      function visMtilT(){
+        main.innerHTML= ``
+        hunder.orderByChild("Navn").startAt("M").endAt("U").on("child_added",genererHTML);
+        katter.orderByChild("Navn").startAt("M").endAt("U").on("child_added",genererHTML);
+
+      }
+
+
+      // Lag egne funksjoner som tilfredstiller spørringene til oppgave 3A, 3B, 3C og 3D her:
+
+    </script>
+
+  </body>
+</html>
