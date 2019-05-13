@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="varedetaljer.css">
+
+    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+      <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDkIt5l3hGwQmc45DyLIG140HaKwUy5vLw",
+            authDomain: "sportsbutikk-uke12.firebaseapp.com",
+            databaseURL: "https://sportsbutikk-uke12.firebaseio.com",
+            projectId: "sportsbutikk-uke12",
+            storageBucket: "sportsbutikk-uke12.appspot.com",
+            messagingSenderId: "938824114802"
+          };
+      firebase.initializeApp(config);
+
+
+      let db = firebase.database();
+      let nyheter = db.ref("nyheter/" + id);
+      let sko = db.ref("sko/" + id);
+      let klaer = db.ref("klaer/" + id);
+      let trening = db.ref("trening/" + id);
+      let merker = db.ref("merker/" + id);
+
+      let url_string = window.location.href;
+      let url = new URL (url_string);
+      let parentId = url.searchParams.get("parent");
+      let id = url.searchParams.get("id");
+
+      const valgProdukt
+
+    </script>
+  </head>
+
+
+  <body>
+    <header>
+
+      <div class="navbar">
+        <a href="#logg inn">Logg inn</a>
+        <a href="#hjem">Hjem</a>
+        <a href="#om">Om oss</a>
+
+
+        <img src="bilder/LOGO.jpg" alt="Logo">
+
+
+        <div class="søkefelt">
+          <form action="sko.html">
+           <input type="text" placeholder="Søk..." name="søk">
+
+          </form>
+        </div>
+
+      </div>
+
+        <section class="forsidebilde">
+          <div class="forside">
+            <img src="bilder/forside4.jpg" alt="turbilde">
+          </div>
+        </section>
+
+
+      <div class="oversikt">
+        <nav>
+          <div class="button1">
+              <button class="button" onclick="Hjem" href="Sportsbutikk.html">Hjem</button>
+              <button class="button" onclick="visNyheter()">Nyheter</button>
+              <button class="button" onclick="visKlær()">Klær</button>
+              <button class="button" onclick="visSko()">Sko</button>
+              <button class="button" onclick="visTrening()">Trening</button>
+              <button class="button" onclick="visMerker()">Merker</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="bildecontainer"></section>
+      <section id="pris"></section>
+
+      <div class="sidebar">
+        <a class="active" href="#dame">Dame</a>
+        <a href="#herre">Herre</a>
+        <a href="#barn">Barn</a>
+        <a href="#salg">Salg</a>
+      </div>
+
+      <div class="row">
+        <h2>Nike flex:</h2>
+        <div class="column">
+          <img src="bilder/adidas sko1.jpg" alt="adidas sko">
+        </div>
+
+        <div class="boks">
+          <p>Pris: 1700 kr</p>
+          <p>Størrelser: 37, 38, 39, 40</p>
+        </div>
+
+      </div>
+    </main>
+
+
+    <footer>
+        <div class="footer">
+          <p>Sporti.no - Nordens største nettbutikk for friluftsliv- og sportsbevisste menn og kvinner mellom 18 og 35 år. Sporti.no inspirerer med nye klær og utstyr hver dag fra noen av de 850 forskjellige varemerkene til fantastiske priser og hurtig levering. Du kan velge mellom kategoriene:  klær, sko, trening og merker og mye mer.</p>
+        </div>
+    </footer>
+
+
+    <script>
+
+            const main = document.querySelector("main");
+            const db = firebase.database();
+
+            const nyheter = db.ref("nyheter");
+            const sko = db.ref("sko");
+            const klaer = db.ref("klaer");
+            const trening = db.ref("trening");
+            const merker = db.ref("merker");
+
+
+
+            function genererHTML(snapshot){
+              let nyheter = snapshot.val();
+              let key = snapshot.key;
+
+
+          };
+
+
+          function visAlle(){
+            main.innerHTML = "";
+            nyheter.on("child_added",genererHTML)
+            .orderByChild("navn")
+            .startAt("A");
+
+          }
+
+          visAlle();
+
+          function visNyheter(){
+            main.innerHTML=``
+            nyheter
+            .orderByChild("navn")
+            .on("child_added", genererHTML);
+          }
+
+          function visSko(){
+            main.innerHTML="";
+            sko
+            .orderByChild("pris")
+            .on("child_added", genererHTML);
+            }
+
+          function visKlær(){
+            main.innerHTML="";
+            klaer
+            .orderByChild("pris")
+            .on("child_added", genererHTML);
+          }
+
+          function visTrening(){
+            main.innerHTML="";
+            trening
+            .orderByChild("pris")
+            .on("child_added", genererHTML);
+          }
+
+          function visMerker(){
+            main.innerHTML="";
+            merker
+            .on("child_added", genererHTML);
+          }
+
+
+
+    </script>
+
+    <script src="varedetaljer.js">
+
+    </script>
+
+  </body>
+</html>
